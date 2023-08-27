@@ -87,7 +87,11 @@ inc_suf = []
 unknown_suf = []
 
 param1 = " ".join(argv[1:])
-path_grbg = Path(fr"{param1}")    
+path_grbg = Path(fr"{param1}")  
+
+if not path_grbg.is_dir():
+    print("Use the possible path!")
+    exit()  
            
 def sorting(path):
     
