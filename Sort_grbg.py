@@ -87,13 +87,14 @@ inc_suf = []
 unknown_suf = []
 
 param1 = " ".join(argv[1:])
-path_grbg = Path(fr"{param1}")  
+path_grbg = Path(fr"{param1}") 
 
 if not path_grbg.is_dir():
     print("Use the possible path!")
     exit()  
            
 def sorting(path):
+    num = 2 
     
     for file in path.iterdir():
         if file.is_dir() and not file.name in folder_list:
@@ -135,9 +136,21 @@ def sorting(path):
             unknown_suf.append(suf) if not suf in inc_suf else ...
             new_file_path = make_file_name(new_file_name, "other")
         
+        while True:
+            path_check = Path(new_file_path)
+            if path_check.is_file():
+                if new_file_path[-7:-4] == (f"({num-1})"):
+                    new_file_path = f"{new_file_path[:-(len(suf))-3]}({num}){suf}"
+                else:
+                    new_file_path = f"{new_file_path[:-(len(suf))]}({num}){suf}"
+                num += 1
+            else:
+                break
+            
         os.rename(file, new_file_path)
-         
-sorting(path_grbg)
+
+if __name__ == "__main__":         
+    sorting(path_grbg)
 
 print(files_dict)
 print(inc_suf)
